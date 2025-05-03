@@ -1,84 +1,87 @@
-📱 Mobile Price Range Prediction
+# Mobile Phone Price Classification
 
-This project uses machine learning to predict the price range of mobile phones based on their technical specifications such as RAM, battery power, processor, and more.
-🧠 Model
+This project implements a machine learning model to predict mobile phone price ranges based on various specifications. The model classifies phones into different price categories using logistic regression.
 
-We use a Logistic Regression model with the following pipeline:
+## Overview
 
-    StandardScaler for feature normalization
+The goal of this project is to accurately classify mobile phones into price ranges (0, 1, 2, 3) based on features such as RAM, battery power, camera quality, and other specifications. This can be useful for manufacturers to determine optimal pricing strategies or for consumers to understand if a phone is reasonably priced.
 
-    Multinomial Logistic Regression (with lbfgs solver)
+## Dataset
 
-    Cross-Validation for model evaluation
+The dataset contains mobile phone specifications and their corresponding price ranges:
 
-    GridSearchCV for hyperparameter tuning
+- `train.csv`: Training data with features and price range labels
+- `test.csv`: Test data with features only (price range to be predicted)
 
-🎯 Accuracy
+### Features
 
-✅ Training Accuracy: 97%
-✅ Cross-Validation Accuracy: ~97% (5-fold)
-📊 Features Used
+The dataset includes the following features:
+- `battery_power`: Battery power in mAh
+- `blue`: Bluetooth availability (0/1)
+- `clock_speed`: Processor clock speed
+- `dual_sim`: Dual SIM support (0/1)
+- `fc`: Front camera megapixels
+- `four_g`: 4G support (0/1)
+- `int_memory`: Internal memory in GB
+- `m_dep`: Mobile depth in cm
+- `mobile_wt`: Weight of mobile phone
+- `n_cores`: Number of processor cores
+- `pc`: Primary camera megapixels
+- `px_height`: Pixel resolution height
+- `px_width`: Pixel resolution width
+- `ram`: Random Access Memory in MB
+- `sc_h`: Screen height of mobile in cm
+- `sc_w`: Screen width of mobile in cm
+- `talk_time`: Longest time a single battery charge will last
+- `three_g`: 3G support (0/1)
+- `touch_screen`: Touch screen support (0/1)
+- `wifi`: WiFi support (0/1)
 
-    Battery power
+### Target Variable
 
-    RAM
+- `price_range`: Price category of the mobile phone (0: Low cost, 1: Medium cost, 2: High cost, 3: Very high cost)
 
-    Mobile weight
+## Implementation
 
-    Camera specs (front and primary)
+The project uses a simple but effective machine learning pipeline:
 
-    Number of cores
+1. Data preprocessing with `StandardScaler` to normalize the features
+2. Multinomial Logistic Regression as the classification algorithm
+3. Training and evaluation on a split of the training data
+4. Final model training on the full training dataset
+5. Prediction on the test set and submission generation
 
-    Screen resolution
+## Model Performance
 
-    Presence of 4G/3G/WiFi/Touchscreen/etc.
+The model achieves good accuracy on both the validation and training datasets:
+- Validation accuracy is calculated on a 20% holdout from the training data
+- The model is then retrained on the full training dataset for final predictions
 
-📁 Files
-File	Description
-train.csv	Training data with features and price_range label
-test.csv	Test data without labels (used for submission)
-submission.csv	Final predictions for test set
-main.py	Complete training and prediction pipeline
-README.md	Project overview
-🚀 How to Run
+## Requirements
 
-# Install dependencies
-pip install -r requirements.txt
+- Python 3.6+
+- pandas
+- scikit-learn
+- matplotlib
+- numpy
 
-# Run the script
-python main.py
+## Usage
 
-This will:
+1. Clone this repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the main script: `python mobile_price_classification.py`
 
-    Train the model
+## Files
 
-    Evaluate accuracy
+- `train.csv`: Training dataset
+- `test.csv`: Test dataset
+- `mobile_price_classification.py`: Main script for model training and prediction
+- `submission.csv`: Output file with predictions
 
-    Generate predictions for the test dataset
+## Future Improvements
 
-    Save predictions to submission.csv
-
-📦 Requirements
-
-    pandas
-
-    matplotlib
-
-    scikit-learn
-
-Install via:
-
-pip install pandas matplotlib scikit-learn
-
-📌 Future Improvements
-
-    Try more models (Random Forest, SVM, etc.)
-
-    Feature engineering (combine or remove less informative features)
-
-    UI interface for inputting phone specs and predicting price
-
-👨‍💻 Author
-
-Made with ❤️ by Wayne
-(Feel free to add links to your GitHub, YouTube, Instagram, etc.)
+Potential enhancements to the model:
+- Feature engineering to create more informative features
+- Hyperparameter tuning to optimize model performance
+- Trying more advanced algorithms like Random Forest or XGBoost
+- Implementing cross-validation for more robust model evaluation
